@@ -11,7 +11,7 @@ reload(utils)
 from __init__ import SHAPE_LIBRARY_PATH
 
 def getShape(crv=None):
-    '''Returns a dictionary containing all the necessery information for rebuilding the passed in crv.'''
+    '''Returns a dictionary containing all the necessary information for rebuilding the passed in crv.'''
     crvShapes = validateCurve(crv)
 
     crvShapeList = []
@@ -27,7 +27,7 @@ def getShape(crv=None):
         points = []
 
         for i in range(mc.getAttr(crvShape + ".controlPoints", s=1)):
-        	points.append(mc.getAttr(crvShape + ".controlPoints[%i]" % i)[0])
+            points.append(mc.getAttr(crvShape + ".controlPoints[%i]" % i)[0])
 
         crvShapeDict["points"] = points
         crvShapeDict["knots"] = utils.getKnots(crvShape)
@@ -39,10 +39,13 @@ def getShape(crv=None):
 
 def setShape(crv, crvShapeList):
     '''Creates a new shape on the crv transform, using the properties in the crvShapeDict.'''
-    crvShapes = validateCurve(crv)
+    crvShapes = mc.listRelatives(crv, c=1, s=1)
 
-    oldColour = mc.getAttr(crvShapes[0] + ".overrideColor")
-    mc.delete(crvShapes)
+    if crvShapes:
+        oldColour = mc.getAttr(crvShapes[0] + ".overrideColor")
+        mc.delete(crvShapes)
+    else:
+        oldColour = 4
 
     for i, crvShapeDict in enumerate(crvShapeList):
         tmpCrv = mc.curve(p=crvShapeDict["points"], k=crvShapeDict["knots"], d=crvShapeDict["degree"], per=bool(crvShapeDict["form"]))
@@ -65,7 +68,8 @@ def delShape(crv):
 
 def validateCurve(crv=None):
     '''Checks whether the transform we are working with is actually a curve and returns it's shapes'''
-    if mc.nodeType(crv) == "transform" and mc.nodeType(mc.listRelatives(crv, c=1, s=1)[0]) == "nurbsCurve":
+    curves = mc.listRelatives(crv, c=1, s=1)
+    if mc.nodeType(crv) in ("transform", "joint") and curves and mc.nodeType(curves[0]) == "nurbsCurve":
         crvShapes = mc.listRelatives(crv, c=1, s=1)
     elif mc.nodeType(crv) == "nurbsCurve":
         crvShapes = mc.listRelatives(mc.listRelatives(crv, p=1)[0], c=1, s=1)
@@ -93,8 +97,8 @@ def saveToLib(crv=None,
 
 def setColour(crv, colour):
     '''Sets the overrideColor of a curve'''
-    if mc.nodeType(crv) == "transform":
-        crvShapes = mc.listRelatives(crv)
+    if mc.nodeType(crv) in ("transform", "joint"):
+        crvShapes = mc.listRelatives(crv, shapes=True)
     else:
         crvShapes = [crv]
     for crv in crvShapes:
@@ -103,6 +107,6 @@ def setColour(crv, colour):
 
 def getColour(crv):
     '''Returns the overrideColor of a curve'''
-    if mc.nodeType(crv) == "transform":
+    if mc.nodeType(crv)  in ("transform", "joint"):
         crv = mc.listRelatives(crv)[0]
     return mc.getAttr(crv + ".overrideColor")
