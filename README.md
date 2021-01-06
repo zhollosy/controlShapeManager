@@ -1,5 +1,5 @@
-## Demo Control shape manager for Maya
-*This repo is used for demonstration purposes, to be followed along with in this blog post*
+## Control shape manager for Maya
+*This repo initially was created for demonstration purposes, to be followed along with in this blog post*
 
 http://bindpose.com/creating-maya-control-shape-manager
 
