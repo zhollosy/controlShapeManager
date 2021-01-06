@@ -1,11 +1,11 @@
-'''Contains utility commands to help work and I/O nurbsCurve data.'''
+"""Contains utility commands to help work and I/O nurbsCurve data."""
 import os
 import json
 from maya import cmds as mc, OpenMaya as om
 
 
 def validatePath(path=None):
-    '''Checks if the file already exists and provides a dialog to overwrite or not'''
+    """Checks if the file already exists and provides a dialog to overwrite or not"""
     if os.path.isfile(path):
         confirm = mc.confirmDialog(title='Overwrite file?',
                                    message='The file ' + path + ' already exists.Do you want to overwrite it?',
@@ -20,7 +20,7 @@ def validatePath(path=None):
 
 
 def loadData(path=None):
-    '''Loads raw JSON data from a file and returns it as a dict'''
+    """Loads raw JSON data from a file and returns it as a dict"""
     if os.path.isfile(path):
         f = open(path, "r")
         data = json.loads(f.read())
@@ -32,10 +32,10 @@ def loadData(path=None):
 
 def saveData(path=None,
              data=None):
-    '''Saves a dictionary as JSON in a file'''
+    """Saves a dictionary as JSON in a file"""
     if validatePath(path):
         f = open(path, "w")
-        f.write(json.dumps(data, sort_keys=1, indent=4, separators=(",", ":")))
+        f.write(json.dumps(data, sort_keys=True, indent=4, separators=(",", ":")))
         f.close()
         return 1
     return 0

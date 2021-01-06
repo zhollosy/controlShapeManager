@@ -25,18 +25,23 @@ if SHELF_NAME and mc.shelfLayout(SHELF_NAME, ex=1):
     popup = mc.popupMenu(b=1)
     mc.menuItem(p=popup, l="Save to library", c=functions.saveCtlShapeToLib)
 
+    # Build control shapes menu
     sub = mc.menuItem(p=popup, l="Assign from library", subMenu=1)
-
     for each in functions.getAvailableControlShapes():
         mc.menuItem(p=sub, l=each[0], c=each[1])
 
-    mc.menuItem(p=popup, l="Copy", c=functions.copyCtlShape)
-    mc.menuItem(p=popup, l="Paste", c=functions.pasteCtlShape)
-
+    # Build color menu
     sub = mc.menuItem(p=popup, l="Set colour", subMenu=1)
-
     for each in functions.getAvailableColours():
         mc.menuItem(p=sub, l=each[0], c=each[1], i=ICON_PATH + each[2])
 
+    mc.menuItem(p=popup, divider=True)
+    mc.menuItem(p=popup, l="Copy", c=functions.copyCtlShapes)
+    mc.menuItem(p=popup, l="Paste", c=functions.pasteCtlShape)
+    mc.menuItem(p=popup, l="Copy-Paste", c=functions.copyPasteCtlShape)
+
+    mc.menuItem(p=popup, divider=True)
     mc.menuItem(p=popup, l="Flip", c=functions.flipCtlShape)
     mc.menuItem(p=popup, l="Mirror", c=functions.mirrorCtlShapes)
+    mc.menuItem(p=popup, divider=True)
+    mc.menuItem(p=popup, l="DELETE", c=functions.deleteCtlShapes)

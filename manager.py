@@ -61,6 +61,9 @@ def setShape(crv, crvShapeList):
         else:
             setColour(newShape, oldColour)
 
+def delShape(crv):
+    crvShapes = mc.listRelatives(crv, c=1, s=1)
+    mc.delete(crvShapes)
 
 def validateCurve(crv=None):
     '''Checks whether the transform we are working with is actually a curve and returns it's shapes'''

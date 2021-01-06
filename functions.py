@@ -71,12 +71,22 @@ def mirrorCtlShapes(*args):
     mc.select(sel)
 
 
-def copyCtlShape(*args):
+def deleteCtlShapes(*args):
+    '''Assigns the control's shape from the ctlShapeClipboard global variable
+    to the selected controls'''
+    sel = mc.ls(sl=1, fl=1)
+    for each in sel:
+        manager.delShape(each)
+    mc.select(sel)
+
+
+def copyCtlShapes(*args):
     '''Copies the selected control's shape to a global variable for pasting'''
     global ctlShapeClipboard
     ctlShapeClipboard = manager.getShape(mc.ls(sl=1, fl=1)[0])
     for ctlShape in ctlShapeClipboard:
-        ctlShape.pop("colour")
+        # ctlShape.pop("colour")
+        pass
 
 
 def pasteCtlShape(*args):
@@ -85,6 +95,16 @@ def pasteCtlShape(*args):
     sel = mc.ls(sl=1, fl=1)
     for each in sel:
         manager.setShape(each, ctlShapeClipboard)
+    mc.select(sel)
+
+
+def copyPasteCtlShape(*args):
+    '''Assigns the control's shape from the ctlShapeClipboard global variable
+    to the selected controls'''
+    sel = mc.ls(sl=1, fl=1)
+    copyCtlShapes()
+    mc.select(sel[1:])
+    pasteCtlShape()
     mc.select(sel)
 
 
