@@ -1,8 +1,9 @@
 ## Control shape manager for Maya
-*This repo initially was created for demonstration purposes, to be followed along with in this blog post*
+*This repo was initially created for demonstration purposes, to be followed along with in this blog post*
 
 http://bindpose.com/creating-maya-control-shape-manager
 
+In this fork it will be updated with additional useful features.
 Scroll down for an example GIF.
 
 ### Usage
@@ -14,6 +15,11 @@ Scroll down for an example GIF.
 import controlShapeManager
 ```
 5. *(Optional)* To get the colours working you need to get the images from [here](https://www.dropbox.com/sh/osdatp13h01coz7/AAB9pCYP9uBZRaVRjYKqIk--a?dl=1). Then in `__init__.py` change `ICON_PATH` to the path where you've saved them.
+
+### Additional features
+- add shapes to joint
+- copy-paste shapes
+- delete shape
 
 ### Example
 ![](http://bindpose.com/wp-content/uploads/2017/05/2017-05-01_08-54-21.gif)
