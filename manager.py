@@ -8,9 +8,7 @@ from maya import cmds as mc
 # Local import
 import utils
 reload(utils)
-
-SHAPE_LIBRARY_PATH = "C:/PATH_TO_LIBRARY"
-
+from __init__ import SHAPE_LIBRARY_PATH
 
 def getShape(crv=None):
     '''Returns a dictionary containing all the necessery information for rebuilding the passed in crv.'''

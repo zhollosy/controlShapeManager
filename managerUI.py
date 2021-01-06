@@ -6,9 +6,7 @@ import maya.cmds as mc
 # Local import
 import functions
 reload(functions)
-
-SHELF_NAME = "Custom"
-ICON_PATH = "C:/PATH_TO_ICONS"
+from __init__ import SHELF_NAME, ICON_PATH
 
 if SHELF_NAME and mc.shelfLayout(SHELF_NAME, ex=1):
     children = mc.shelfLayout(SHELF_NAME, q=1, ca=1) or []
